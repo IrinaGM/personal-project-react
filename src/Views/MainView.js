@@ -7,11 +7,15 @@ import SearchView from "./SearchView";
 const MainView = () => {
    const [isSearchView,setSearchView] = useState(true);
 
-   const toggleSearchView = () => {
+   const toggleSearchViewFalse = () => {
     setSearchView(false);
    };
 
-   return isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> : <ResultView/>;
+   const toggleSearchViewTrue = () => {
+      setSearchView(true);
+     };
+
+   return isSearchView ? <SearchView toggleSearchView={toggleSearchViewFalse}/> : <ResultView toggleSearchView={toggleSearchViewTrue}/>;
 };
 
 export default MainView;
