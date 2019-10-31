@@ -1,5 +1,13 @@
 import React from "react";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import PullRequestListItemStatus from "./PullRequestListItemStatus";
 
-const PullRequestListItem = () => {};
+
+const PullRequestListItem = ({title,htmlUrl,status}) => {
+    return <div className="card-block pb-2 pt-2 border">
+            <a href={htmlUrl} target="_blank" rel="noopener noreferrer">{title}</a><br/>
+            <PullRequestListItemStatus status={status}/>
+        </div>
+};
 
 export default PullRequestListItem;

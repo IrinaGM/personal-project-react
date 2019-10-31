@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ResultView from "./ResultView";
 import SearchView from "./SearchView";
 
-
-
 const MainView = () => {
-   const [isSearchView,setSearchView] = useState(true);
+   const [isSearchView,setSearchView] = useState(false); // TODO: change to default true
+   const [userName, setUserName] = useState('pkanal'); // TODO: change to default ''
 
-   const toggleSearchViewFalse = () => {
-    setSearchView(false);
+   const toggleSearchView = (userName) => {
+      setSearchView(!isSearchView);
+      setUserName(userName);
    };
 
-   const toggleSearchViewTrue = () => {
-      setSearchView(true);
-     };
-
-   return isSearchView ? <SearchView toggleSearchView={toggleSearchViewFalse}/> : <ResultView toggleSearchView={toggleSearchViewTrue}/>;
+   return isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> 
+                       : <ResultView toggleSearchView={toggleSearchView} userName={userName}/>;
 };
 
 export default MainView;
