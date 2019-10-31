@@ -1,12 +1,12 @@
 import React, {useState,useEffect} from "react";
 import PullRequestListItem from "./PullRequestListItem";
-import {BASE_URL} from "./Consts"
+import {BASE_URL} from "./Consts";
 
 const PullRequestList = ({userName}) => {
     const [apiData,setApiData] = useState([]);
 
     useEffect(() => {
-        const getPullRequestItem = () => {
+        const getPullRequestItems = () => {
             return fetch(`${BASE_URL}/${userName}/events`)
                     .then(response => response.json())
                     .then(data => data
@@ -22,7 +22,7 @@ const PullRequestList = ({userName}) => {
                     .then(data => setApiData(data))
                     .catch(error => console.log(error));
         };
-        getPullRequestItem();
+        getPullRequestItems();
     },[userName]);
 
     
@@ -30,7 +30,7 @@ const PullRequestList = ({userName}) => {
         <h3>Most recent pull requests by the user:</h3>
         <div className="card mb-5">
             {apiData.length ? 
-            apiData.map(item => <PullRequestListItem key={apiData.indexOf(item)} title={item.title} htmlUrl={item.html_url} status={item.status}/>)
+            apiData.map(item => <PullRequestListItem key={"PullRequestListItem"+apiData.indexOf(item)} title={item.title} htmlUrl={item.html_url} status={item.status}/>)
         : <p> No Pull Requests Found </p>}
         </div>
             

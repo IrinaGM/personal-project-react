@@ -3,8 +3,8 @@ import ResultView from "./ResultView";
 import SearchView from "./SearchView";
 
 const MainView = () => {
-   const [isSearchView,setSearchView] = useState(false); // TODO: change to default true
-   const [userName, setUserName] = useState('pkanal'); // TODO: change to default ''
+   const [isSearchView,setSearchView] = useState(true); // TODO: change to default true
+   const [userName, setUserName] = useState(''); // TODO: change to default ''
 
    const toggleSearchView = (userName) => {
       setSearchView(!isSearchView);

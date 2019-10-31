@@ -18,7 +18,7 @@ const SearchView = (props) => {
         <h1> GitHub Stats Search </h1>
         <input className="mb-2 mt-2 w-50"  id="userNameInput" type="text" onChange={event => setUserName(event.target.value)}></input><br/>
         <Button variant="primary" onClick={hangdleSearch}>Search</Button>
-        {errMsg ? <p> {errMsg} </p> : ''}
+        {errMsg ? <p> User {errMsg} </p> : ''}
     </div>
 };
 
