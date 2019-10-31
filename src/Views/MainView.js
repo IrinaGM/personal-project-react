@@ -3,16 +3,21 @@ import ResultView from "./ResultView";
 import SearchView from "./SearchView";
 
 const MainView = () => {
-   const [isSearchView,setSearchView] = useState(true); // TODO: change to default true
-   const [userName, setUserName] = useState(''); // TODO: change to default ''
+   const [searchData,setSearchData] = useState({
+      isSearchView:true,
+      userName:''
+   });
 
    const toggleSearchView = (userName) => {
-      setSearchView(!isSearchView);
-      setUserName(userName);
+      setSearchData({
+         isSearchView:!searchData.isSearchView,
+         userName: userName
+      });
    };
 
-   return isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> 
-                       : <ResultView toggleSearchView={toggleSearchView} userName={userName}/>;
+   return searchData.isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> 
+                                 : <ResultView toggleSearchView={toggleSearchView} userName={searchData.userName}/>;
+                     
 };
 
 export default MainView;
