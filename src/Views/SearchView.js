@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import {BASE_URL} from "../Components/Consts"
 
-
 const SearchView = (props) => {
     const [userName,setUserName] = useState('');
     const [errMsg,setErrMsg] = useState('');
@@ -14,12 +13,21 @@ const SearchView = (props) => {
             .catch(error => setErrMsg(error.message)); 
     };
 
+   const handleKeyPress = (event) => {
+       if(event.key === 'Enter') {
+           hangdleSearch()
+        }
+    };
+
   return <div>
         <h1> GitHub Stats Search </h1>
-        <input className="mb-2 mt-2 w-50"  id="userNameInput" type="text" onChange={event => setUserName(event.target.value)}></input><br/>
+        <input className="mb-2 mt-2 w-50"  id="userNameInput" type="text" 
+                onChange={event => setUserName(event.target.value)} 
+                onKeyPress={handleKeyPress}></input><br/>
         <Button variant="primary" onClick={hangdleSearch}>Search</Button>
         {errMsg ? <p> User {errMsg} </p> : ''}
     </div>
 };
+
 
 export default SearchView;

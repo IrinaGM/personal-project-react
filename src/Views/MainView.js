@@ -9,10 +9,12 @@ const MainView = () => {
    });
 
    const toggleSearchView = (userName) => {
-      setSearchData({
-         isSearchView:!searchData.isSearchView,
-         userName: userName
-      });
+      setSearchData(
+         {
+            isSearchView:!searchData.isSearchView,
+            userName: userName
+         }
+      );
    };
 
    return searchData.isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> 
