@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
-import {BASE_URL} from "../Components/Consts"
+import {BASE_URL} from "../Components/Consts";
+import {ErrMessage} from "../Components/Messages";
 
 const SearchView = (props) => {
     const [userName,setUserName] = useState('');
@@ -25,7 +26,7 @@ const SearchView = (props) => {
                 onChange={event => setUserName(event.target.value)} 
                 onKeyPress={handleKeyPress}></input><br/>
         <Button variant="primary" onClick={hangdleSearch}>Search</Button>
-        {errMsg ? <p> User {errMsg} </p> : ''}
+        {errMsg ? <ErrMessage msg={`The following error has acurred: ${errMsg}`}/> : ''}
     </div>
 };
 

@@ -1,93 +1,22 @@
-import React, {useState, useEffect} from "react";
-import {BASE_URL} from "./Consts";
+import React from "react";
 import ForkedRepoListItem from "./ForkedRepoListItem";
+import {ErrMessage} from "./Messages";
 
-// const ForkedRepoList = ({userName}) => {
-//     const [apiData,setApiData] = useState([]);
-
-//     useEffect(() => {
-//         const getForkedReposList = () => {
-//             return fetch(`${BASE_URL}/${userName}/events`)
-//                     .then(response => response.json())
-//                     .then(data => data
-//                         .filter(forkEvent => forkEvent.type === "ForkEvent")
-//                         .map(forkEvent => 
-//                                 ({
-//                                     title: forkEvent.payload.forkee.full_name,
-//                                     html_url: forkEvent.payload.forkee.html_url,
-//                                     forkedFrom: forkEvent.repo.name
-//                                 })   
-//                             )
-//                         )
-//                     .then(data => setApiData(data))
-//                     .catch(error => console.log(error));
-//         };
-//         getForkedReposList();
-//     },[userName]); 
-    
-//     return <div> 
-//         <h3>Most resent repositories forked by the user:</h3>
-//         <div className="card mb-5">
-//             {apiData.length ? 
-//             apiData.map(item => <ForkedRepoListItem key={"ForkedRepoListItem"+apiData.indexOf(item)} title={item.title} htmlUrl={item.html_url} forkedFrom={item.forkedFrom}/>)
-//         : <p> No Forked Repositories Found </p>}
-//         </div>
-//     </div>
-// };
-
-const ForkedRepoList = ({userName}) => {
-    const [apiData,setApiData] = useState(
-        {
-            data:[],
-            isLoading:true
-        }
-    );
-
-    useEffect(() => {
-        const getForkedReposList = () => {
-            return fetch(`${BASE_URL}/${userName}/events`)
-                    .then(response => response.json())
-                    .then(data => data
-                        .filter(forkEvent => forkEvent.type === "ForkEvent")
-                        .map(forkEvent => 
-                                ({
-                                title: forkEvent.payload.forkee.full_name,
-                                html_url: forkEvent.payload.forkee.html_url,
-                                forked_from: forkEvent.repo.name
-                                })
-                            )
-                        )
-                    .then(data => setApiData(
-                            {
-                                data: data,
-                                isLoading:false
-                            }))
-                    .catch(error => console.log(
-                        {
-                            data: error,
-                            isLoading: false
-                        }));
-        };
-        getForkedReposList();
-    },[userName]);
-    
-    
+const ForkedRepoList = ({data}) => {  
     return <div> 
-        <h3>Most resent repositories forked by the user:</h3>
+        <h3>Most resent repositories forked</h3>
         <div className="card mb-5">
-            { 
-                apiData.isLoading ? <p> Loading... </p>  
-                                : apiData.data.length ? apiData.data
-                                .map(item => <ForkedRepoListItem 
-                                    key={"ForkedRepoListItem"+apiData.data.indexOf(item)} 
-                                    title={item.title} 
-                                    htmlUrl={item.html_url} 
-                                    forkedFrom={item.forked_from}/>)
-                                                : <p> No Forked Repositories Found </p>
+            { data.length ? 
+                data.map((item,index) => <ForkedRepoListItem 
+                key={`ForkedRepoListItem-${index}`} 
+                title={item.title} 
+                htmlUrl={item.html_url} 
+                forkedFrom={item.forked_from}/>)
+                            : 
+                <ErrMessage msg="No Forked Repositories Found"/>
             }
         </div>
     </div>
 };
-
 
 export default ForkedRepoList;
