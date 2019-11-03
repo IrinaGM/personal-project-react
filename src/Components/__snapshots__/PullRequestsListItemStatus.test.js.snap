@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing PullRequestListItemStatus testing closed status 1`] = `
+<ForwardRef
+  pill={true}
+  variant="primary"
+>
+  closed
+</ForwardRef>
+`;
+
+exports[`Testing PullRequestListItemStatus testing open status 1`] = `
+<ForwardRef
+  pill={true}
+  variant="success"
+>
+  open
+</ForwardRef>
+`;

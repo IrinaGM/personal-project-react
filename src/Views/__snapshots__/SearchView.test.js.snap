@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchView Should render properly 1`] = `
+<div>
+  <h1>
+     GitHub Stats Search 
+  </h1>
+  <input
+    className="mb-2 mt-2 w-50"
+    id="userNameInput"
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    type="text"
+  />
+  <br />
+  <ForwardRef
+    active={false}
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+    variant="primary"
+  >
+    Search
+  </ForwardRef>
+  
+</div>
+`;
