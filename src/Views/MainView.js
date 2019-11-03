@@ -1,25 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import ResultView from "./ResultView";
 import SearchView from "./SearchView";
+import { useSelector } from 'react-redux';
 
 const MainView = () => {
-   const [searchData,setSearchData] = useState({
-      isSearchView:true,
-      userName:''
-   });
+   const userFound = useSelector(state => state.userSearchReducer.userFound);
 
-   const toggleSearchView = (userName) => {
-      setSearchData(
-         {
-            isSearchView:!searchData.isSearchView,
-            userName: userName
-         }
-      );
-   };
-
-   return searchData.isSearchView ? <SearchView toggleSearchView={toggleSearchView}/> 
-                                 : <ResultView toggleSearchView={toggleSearchView} userName={searchData.userName}/>;
-                     
+   return userFound ? <ResultView /> : <SearchView/>;
 };
 
 export default MainView;

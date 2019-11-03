@@ -1,32 +1,37 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
-import {BASE_URL} from "../Components/Consts";
-import {ErrMessage} from "../Components/Messages";
+import {LoadingMessage, ErrMessage} from "../Components/Messages";
+import {checkUser} from "../store/actions/searchActions";
+import { useDispatch, useSelector } from 'react-redux';
 
-const SearchView = (props) => {
-    const [userName,setUserName] = useState('');
-    const [errMsg,setErrMsg] = useState('');
+const SearchView = () => {
+    const dispatch = useDispatch();
+    const [input, setInput] = useState('');
+    const isLoading = useSelector(state => state.userSearchReducer.isLoading);
+    const errMsg = useSelector(state => state.userSearchReducer.errMsg); 
 
-    const hangdleSearch = () => {
-        fetch(`${BASE_URL}/${userName}`)
-            .then(response => response.json())
-            .then(user => user.message ? setErrMsg(user.message) : props.toggleSearchView(user.login))
-            .catch(error => setErrMsg(error.message)); 
+   const handleKeyPress = event => {
+       if(event.key === 'Enter') {
+            dispatch(checkUser(input))
+        }
     };
 
-   const handleKeyPress = (event) => {
-       if(event.key === 'Enter') {
-           hangdleSearch()
-        }
+    const handleChange = event => {
+        setInput(event.target.value)
+    };
+
+    const handleClick = () => {
+        dispatch(checkUser(input))
     };
 
   return <div>
         <h1> GitHub Stats Search </h1>
-        <input className="mb-2 mt-2 w-50"  id="userNameInput" type="text" 
-                onChange={event => setUserName(event.target.value)} 
+        <input className="mb-2 mt-2 w-50"  id="userNameInput" type="text"
+                onChange={handleChange}
                 onKeyPress={handleKeyPress}></input><br/>
-        <Button variant="primary" onClick={hangdleSearch}>Search</Button>
-        {errMsg ? <ErrMessage msg={`The following error has acurred: ${errMsg}`}/> : ''}
+        <Button variant="primary" onClick={handleClick}>Search</Button>
+        { isLoading ? <LoadingMessage msg="Searching for user ..." /> :
+         errMsg ? <ErrMessage msg={`The following error has acurred: ${errMsg}`}/> : ''}
     </div>
 };
 

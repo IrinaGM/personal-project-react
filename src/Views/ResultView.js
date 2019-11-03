@@ -1,70 +1,37 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import ForkedRepoList from "../Components/ForkedRepoList";
 import PullRequestList from "../Components/PullRequestList";
 import {LoadingMessage, ErrMessage} from "../Components/Messages";
-import {BASE_URL} from "../Components/Consts";
+import {getEventsData} from "../store/actions/resultsActions";
+import { useDispatch, useSelector } from 'react-redux';
+import {setSearchNewUser} from "../store/actions/searchActions";
 
-const ResultView = ({userName, toggleSearchView}) => {
-    const [apiData,setApiData] = useState(
-        {
-            forkedRepoListData:[],
-            pullRequestListData:[],
-            isLoading:true,
-            isError:false
-        }
-    );
+const ResultView = ({toggleSearchView}) => {
+    const dispatch = useDispatch();
+    const userName = useSelector(state => state.userSearchReducer.userName);
+    const forkedRepoListData = useSelector(state => state.resultsReducer.forkedRepoListData);
+    const pullRequestListData = useSelector(state => state.resultsReducer.pullRequestListData);
+    const isLoading = useSelector(state => state.resultsReducer.isLoading); 
+    const isError = useSelector(state => state.resultsReducer.isError);
 
     useEffect(() => {
-        const getEventsData = () => {
-            return fetch(`${BASE_URL}/${userName}/events`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const forkedRepoListData = data
-                            .filter(forkEvent => forkEvent.type === "ForkEvent")
-                            .map(forkEvent => 
-                                ({
-                                    title: forkEvent.payload.forkee.full_name,
-                                    html_url: forkEvent.payload.forkee.html_url,
-                                    forked_from: forkEvent.repo.name
-                                })
-                            )
-                        
-                        const pullRequestListData = data
-                            .filter(pullEvent => pullEvent.type === "PullRequestEvent")
-                            .map(pullEvent => 
-                            ({
-                                title: pullEvent.payload.pull_request.title,
-                                html_url: pullEvent.payload.pull_request.html_url,
-                                status: pullEvent.payload.pull_request.state
-                            })
-                        )
-                        return {
-                            forkedRepoListData:forkedRepoListData,
-                            pullRequestListData:pullRequestListData,
-                            isLoading:false
-                        }
-                    })
-                    .then(data => setApiData(data))
-                    .catch(error => setApiData(
-                        {
-                            isLoading:false,
-                            isError:true
-                        }
-                    ));       
-        };
-        getEventsData();
-    },[userName]);
+        dispatch(getEventsData(userName));
+    },[userName,dispatch]);
+
+    const handleNewSearch = () => {
+        dispatch(setSearchNewUser());
+    };
 
     return <div>
         <h1> GitHub Information for {userName} </h1>
-        { apiData.isLoading ? <LoadingMessage msg="User data is loading ..." /> :
-            apiData.isError ? <ErrMessage msg="Could not fetch user data" /> :
+        { isLoading ? <LoadingMessage msg="User data is loading ..." /> :
+            isError ? <ErrMessage msg="Could not fetch user data" /> :
             <div>
-                <ForkedRepoList data={apiData.forkedRepoListData}/>
-                <PullRequestList data={apiData.pullRequestListData}/>
+                <ForkedRepoList data={forkedRepoListData}/>
+                <PullRequestList data={pullRequestListData}/>
                 <label htmlFor="SearchAnotherUser"/>
-                <Button variant="primary" onClick={toggleSearchView}>Search New User</Button>
+                <Button variant="primary" onClick={handleNewSearch}>Search New User</Button>
             </div>
         } 
     </div>
