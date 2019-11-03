@@ -1,4 +1,4 @@
-import {RESULTS_ACTIONS} from "../actionTypes";
+import {RESULTS_ACTIONS} from "../actions/actionTypes";
 
 const RESULTS_INITIAL_STATE = {
         forkedRepoListData:[],

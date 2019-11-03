@@ -1,4 +1,4 @@
-import {SEARCH_ACTIONS} from "../actionTypes";
+import {SEARCH_ACTIONS} from "../actions/actionTypes";
 
 const USER_INITIAL_STATE = {
     userName: '',

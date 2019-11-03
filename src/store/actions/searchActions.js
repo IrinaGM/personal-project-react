@@ -1,5 +1,5 @@
 import {BASE_URL} from "../../Components/Consts";
-import {SEARCH_ACTIONS} from "../actionTypes";
+import {SEARCH_ACTIONS} from "../actions/actionTypes";
 
 
 export const setSearchIsLoading = () => ({
@@ -12,7 +12,7 @@ export const setSearchFailure = (error) => ({
 });
 
 export const setSearchSuccess = (userName) => ({
-    type: SEARCH_ACTIONS.RESULTS_SUCCESS,
+    type: SEARCH_ACTIONS.SEARCH_SUCCESS,
     userName: userName
 });
 

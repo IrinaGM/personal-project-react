@@ -1,5 +1,5 @@
 import {BASE_URL} from "../../Components/Consts";
-import {RESULTS_ACTIONS} from "../actionTypes";
+import {RESULTS_ACTIONS} from "../actions/actionTypes";
 
 
 export const setResultsIsLoading = () => ({
